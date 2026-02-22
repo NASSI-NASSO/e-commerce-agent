@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ShoppingCart, MessageCircle, Star, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useState } from 'react';
 import { formatCurrency } from '../utils/formatters';
 
-const ProductCard = ({ id, name, price, category, status }) => {
+const ProductCard = ({ id, name, price, category, status, image }) => {
     const { addToCart } = useCart();
+    const navigate = useNavigate();
     const [isAdded, setIsAdded] = useState(false);
 
     const handleAddToCart = () => {
-        addToCart({ id, name, price, category });
+        addToCart({ id, name, price, category, image });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
     };
 
+    const handleBargain = () => {
+        navigate('/chat', { state: { product: { id, name, price, category, image } } });
+    };
+
     return (
-        <div className="glass rounded-3xl overflow-hidden group hover:border-morocco-saffron/40 transition-all duration-500 hover:shadow-2xl hover:shadow-morocco-saffron/5">
+        <div id={`product-${id}`} className="glass rounded-3xl overflow-hidden group hover:border-morocco-saffron/40 transition-all duration-500 hover:shadow-2xl hover:shadow-morocco-saffron/5">
             <div className="h-64 bg-morocco-midnight/40 relative overflow-hidden">
                 <div className="absolute top-4 left-4 bg-morocco-midnight/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-morocco-saffron border border-morocco-saffron/20">
                     {category}
@@ -26,8 +31,16 @@ const ProductCard = ({ id, name, price, category, status }) => {
                     </div>
                 )}
                 <div className="absolute inset-0 flex items-center justify-center text-white/5 group-hover:scale-110 transition-transform duration-700">
-                    {/* Image placeholder */}
-                    <ShoppingCart size={80} />
+                    {/* Image placeholder or actual image */}
+                    {image ? (
+                        <img 
+                            src={image} 
+                            alt={name} 
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <ShoppingCart size={80} />
+                    )}
                 </div>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-morocco-midnight/80 to-transparent opacity-60"></div>
@@ -68,7 +81,10 @@ const ProductCard = ({ id, name, price, category, status }) => {
                             <span>{isAdded ? 'Added' : 'Add'}</span>
                         </button>
 
-                        <button className="bg-morocco-terracotta hover:bg-morocco-clay text-white p-3 rounded-2xl transition-all shadow-lg shadow-morocco-terracotta/20 flex items-center gap-2 group/btn">
+                        <button 
+                            onClick={handleBargain}
+                            className="bg-morocco-terracotta hover:bg-morocco-clay text-white p-3 rounded-2xl transition-all shadow-lg shadow-morocco-terracotta/20 flex items-center gap-2 group/btn"
+                        >
                             <MessageCircle size={20} className="group-hover/btn:rotate-12 transition-transform" />
                             <span className="font-bold text-sm px-1">Bargain</span>
                         </button>
