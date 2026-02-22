@@ -1,6 +1,10 @@
 import React from 'react';
 import { ShoppingBag, Gem, UtensilsCrossed, Brush } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import potImage from '../../assets/pot.jpg';
+import berbersImage from '../../assets/berbers.jpg';
+import necklaceImage from '../../assets/Necklace Ai.jpg';
+import spicesImage from '../../assets/spices.jpg';
 
 const categories = [
     {
@@ -8,28 +12,32 @@ const categories = [
         icon: <Brush className="text-morocco-saffron" size={32} />,
         description: 'Hand-painted ceramics from the heart of Safi.',
         color: 'from-blue-600/20 to-indigo-900/40',
-        path: '/catalog?category=pottery'
+        path: '/catalog?category=pottery',
+        image: potImage
     },
     {
         name: 'Berber Textiles',
         icon: <ShoppingBag className="text-morocco-terracotta" size={32} />,
         description: 'Authentic hand-woven carpets and traditional fabrics.',
         color: 'from-orange-600/20 to-red-900/40',
-        path: '/catalog?category=textiles'
+        path: '/catalog?category=textiles',
+        image: berbersImage
     },
     {
         name: 'Royal Jewelry',
         icon: <Gem className="text-morocco-emerald" size={32} />,
         description: 'Intricate silver and gold pieces with precious stones.',
         color: 'from-emerald-600/20 to-teal-900/40',
-        path: '/catalog?category=jewelry'
+        path: '/catalog?category=jewelry',
+        image: necklaceImage
     },
     {
         name: 'Medina Spices',
         icon: <UtensilsCrossed className="text-morocco-saffron" size={32} />,
         description: 'Pure, aromatic spices sourced from local cooperatives.',
         color: 'from-yellow-600/20 to-amber-900/40',
-        path: '/catalog?category=spices'
+        path: '/catalog?category=spices',
+        image: spicesImage
     }
 ];
 
@@ -61,8 +69,14 @@ const FeaturedCategories = () => {
                             to={cat.path}
                             className={`group relative h-80 rounded-[40px] p-8 overflow-hidden transition-all duration-500 hover:scale-[1.02] border border-white/5 hover:border-morocco-saffron/30 shadow-2xl`}
                         >
-                            {/* Background Gradient & Pattern */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} -z-10 group-hover:scale-110 transition-transform duration-700`}></div>
+                            {/* Background Image, Gradient & Pattern */}
+                            {cat.image && (
+                                <div 
+                                    className="absolute inset-0 -z-20 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style={{ backgroundImage: `url(${cat.image})` }}
+                                ></div>
+                            )}
+                            <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} ${cat.image ? 'opacity-80' : ''} -z-10 group-hover:scale-110 transition-transform duration-700`}></div>
                             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                                 <div className="w-24 h-24 border-4 border-white rounded-full"></div>
                             </div>
