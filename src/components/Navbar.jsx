@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingBag, MessageSquare, Search, User, LogOut } from 'lucide-react';
+import { ShoppingBag, MessageSquare, User, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -23,9 +23,6 @@ const Navbar = () => {
             </div>
 
             <div className="flex gap-4 items-center">
-                <button className="p-2 hover:bg-white/10 rounded-full transition-all">
-                    <Search size={20} />
-                </button>
                 <Link to="/cart" className="p-2 hover:bg-white/10 rounded-full transition-all relative">
                     <ShoppingBag size={20} />
                     {cartCount > 0 && (
