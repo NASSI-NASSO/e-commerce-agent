@@ -42,8 +42,12 @@ const Cart = () => {
                 <div className="lg:col-span-2 space-y-6">
                     {cartItems.map((item) => (
                         <div key={item.id} className="glass p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-center group hover:border-white/20 transition-all">
-                            <div className="w-32 h-32 bg-morocco-midnight/50 rounded-2xl flex items-center justify-center shrink-0">
-                                <ShoppingBag size={40} className="text-white/10" />
+                            <div className="w-32 h-32 bg-morocco-midnight/50 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden">
+                                {item.image ? (
+                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <ShoppingBag size={40} className="text-white/10" />
+                                )}
                             </div>
 
                             <div className="flex-1 text-center sm:text-left">
